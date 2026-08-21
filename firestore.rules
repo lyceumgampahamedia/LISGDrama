@@ -1,0 +1,74 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function activeAdminDocument() {
+      return /databases/$(database)/documents/admins/$(request.auth.uid);
+    }
+
+    function isAdmin() {
+      return signedIn() && (
+        ("admin" in request.auth.token && request.auth.token.admin == true) ||
+        (exists(activeAdminDocument()) && get(activeAdminDocument()).data.active == true)
+      );
+    }
+
+    // A signed-in user may check only their own authorisation document.
+    // Admin records must be created or removed through Firebase Console.
+    match /admins/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+      allow list, create, update, delete: if false;
+    }
+
+    match /shows/{showId} {
+      // The separate public ticketing site needs anonymous read-only availability.
+      // These documents contain seat state, not customer details.
+      allow read: if true;
+      allow write: if false;
+
+      match /seats/{seatId} {
+        allow read: if true;
+        allow create, update, delete: if isAdmin();
+      }
+    }
+
+    match /reservations/{reservationId} {
+      allow read, create, update, delete: if isAdmin();
+    }
+
+    // The UI records create/delete actions, but audit entries themselves are immutable.
+    match /auditLogs/{logId} {
+      allow read, create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // Retain the payment system's existing protected collections.
+    // Cloud Functions use Firebase Admin SDK and do not depend on these client grants.
+    match /paymentSessions/{id} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /paymentEvents/{id} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /mail/{id} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /rateLimits/{id} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

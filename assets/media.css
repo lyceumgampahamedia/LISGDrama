@@ -1,0 +1,40 @@
+/* Original event artwork. Keep these filenames unchanged in assets/images/. */
+body{background:#08162b}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:#08162b url("images/BG.png") center top/cover no-repeat}
+body:after{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(4,15,32,.42) 0,rgba(12,31,58,.72) 500px,#eef1f6 900px);pointer-events:none}
+.site-shell{background:transparent}
+.brand{gap:0}
+.brand-logo{display:block;width:auto;max-width:min(210px,55vw);height:58px;object-fit:contain;object-position:left center;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,420px) auto;align-items:end;padding:34px 0 28px}
+.hero-copy{position:relative;z-index:1}
+.cast-artwork{display:block;width:100%;max-height:330px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 20px 30px rgba(0,0,0,.28))}
+@media(max-width:980px){.hero{grid-template-columns:minmax(0,1fr) minmax(180px,300px)}.connection-pill{grid-column:1/-1}.cast-artwork{grid-column:2;grid-row:1}}
+@media(max-width:760px){.hero{display:flex}.cast-artwork{align-self:center;width:min(310px,92vw);max-height:260px}.connection-pill{align-self:stretch}}
+@media(max-width:620px){body:before{background-position:center top}.brand-logo{height:48px}}
+
+/* Staff walk-in booking */
+.admin-header-actions .walk-in-trigger{border-color:#173c68;background:#173c68;color:#fff}
+.walk-in-form select{width:100%;min-height:47px;padding:10px 12px;border:1px solid #cbd3df;border-radius:11px;background:#fff}
+.walk-in-form label small{color:#6b788b;font-size:.72rem;font-weight:500}
+.walk-in-summary{display:flex;align-items:center;justify-content:space-between;margin:18px 0;padding:13px 15px;border:1px solid #a8dbc7;border-radius:12px;background:#ecfaf4;color:#175943}
+.walk-in-summary strong{font-size:.9rem;text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:760px){.admin-header-actions{width:100%;flex-wrap:wrap}.admin-header-actions .walk-in-trigger{width:100%}}
+
+/* Confirmed ticket sales breakdown */
+.ticket-sales-summary{margin-top:22px;padding:18px;border:1px solid #dce4ef;border-radius:18px;background:#f7f9fc}
+.ticket-sales-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:13px}
+.ticket-sales-heading h2,.ticket-sales-heading h3{margin:0;color:#13294b;font-size:1.05rem}
+.ticket-sales-heading p{margin:5px 0 0;color:#61708a;font-size:.8rem;line-height:1.45}
+.tier-show-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tier-show-card{overflow:hidden;border:1px solid #dbe2ec;border-radius:14px;background:#fff}
+.tier-show-card header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid #e4e9f0;background:#edf3fa}
+.tier-show-card header span{color:#61708a;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.tier-show-card header strong{color:#13294b;font-size:1.08rem}
+.tier-show-card ul{margin:0;padding:0;list-style:none}
+.tier-show-card li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;border-bottom:1px solid #edf0f4;color:#42526a;font-size:.86rem}
+.tier-show-card li:last-child{border-bottom:0}
+.tier-show-card li>strong{color:#13294b;font-variant-numeric:tabular-nums}
+.total-sold-strip{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0 0;padding:13px 14px;border-radius:12px;background:#13294b;color:#fff;font-size:.86rem}
+.total-sold-strip strong{font-size:1.05rem;font-variant-numeric:tabular-nums}
+.admin-ticket-sales{width:min(1500px,100%);margin:0 auto 18px;background:#fff;box-shadow:0 10px 35px rgba(16,27,47,.06)}
+@media(max-width:620px){.tier-show-grid{grid-template-columns:1fr}.total-sold-strip{align-items:flex-start;flex-direction:column;gap:5px}}

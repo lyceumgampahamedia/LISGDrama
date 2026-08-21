@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#102642" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://www.gstatic.com https://www.google.com https://www.recaptcha.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebase.com https://*.firebaseapp.com https://www.google.com https://www.recaptcha.net; frame-src 'self' https://*.firebaseapp.com https://www.google.com https://www.recaptcha.net; img-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    />
+    <title>Walk-in Booking Desk | Garu Katanayaka</title>
+    <link rel="icon" type="image/png" href="assets/images/TLogo.png" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/media.css" />
+    <link rel="stylesheet" href="assets/admin-only.css" />
+    <script type="module" src="js/admin.js"></script>
+  </head>
+  <body class="admin-only-body">
+    <section id="loading-view" class="auth-gate" aria-live="polite">
+      <div class="auth-card auth-loading-card">
+        <span class="auth-spinner" aria-hidden="true"></span>
+        <h1>Checking staff access</h1>
+        <p>Please wait while your secure session is verified.</p>
+      </div>
+    </section>
+
+    <section id="login-view" class="auth-gate" hidden>
+      <div class="auth-card">
+        <img class="auth-logo" src="assets/images/Logo.svg" alt="Lyceum International School Gampaha" />
+        <p class="eyebrow">Authorised staff only</p>
+        <h1>Walk-in booking desk</h1>
+        <p>Sign in to view live seat availability, confirm counter bookings and manage reservation records.</p>
+
+        <form id="login-form" class="auth-form">
+          <label>
+            <span>Email address</span>
+            <input name="email" type="email" autocomplete="username" required autofocus />
+          </label>
+          <label>
+            <span>Password</span>
+            <input name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <p id="login-error" class="form-error" role="alert" hidden></p>
+          <button id="login-button" class="primary-button" type="submit">Sign in securely</button>
+        </form>
+
+        <p class="auth-security-note">Seat and customer records cannot be read until Firebase verifies administrator access.</p>
+      </div>
+    </section>
+
+    <main id="dashboard-view" class="site-shell show-one admin-desk-shell" hidden>
+      <header class="site-header admin-desk-header">
+        <a class="brand" href="./" aria-label="Walk-in booking desk home">
+          <img class="brand-logo" src="assets/images/Logo.svg" alt="Lyceum International School Gampaha" />
+        </a>
+        <div class="admin-session">
+          <div><span>Signed in as</span><strong id="admin-email">—</strong></div>
+          <button id="sign-out" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <section class="hero admin-hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Staff counter system</p>
+          <h1 id="page-title">Walk-in booking desk</h1>
+          <p class="event-meta">
+            <span>Garu Katanayaka</span><span aria-hidden="true">•</span>
+            <time datetime="2026-09-03">3 September 2026</time><span aria-hidden="true">•</span>
+            <span>Zeus Hall</span>
+          </p>
+        </div>
+        <img class="cast-artwork" src="assets/images/Asset1.png" alt="Garu Katanayaka cast artwork" />
+        <div id="connection-status" class="connection-pill loading" role="status">
+          <i aria-hidden="true"></i><span>Waiting for administrator access…</span>
+        </div>
+      </section>
+
+      <section class="show-picker" aria-labelledby="show-title">
+        <div class="section-heading">
+          <div><span class="step">01</span><h2 id="show-title">Choose the performance</h2></div>
+          <p><strong id="available-count">—</strong> / 600 seats available</p>
+        </div>
+        <div class="show-options" role="radiogroup" aria-labelledby="show-title">
+          <button class="show-option" type="button" role="radio" aria-checked="true" data-show="show1">
+            <span>Afternoon performance</span><strong>3:30 PM</strong><time datetime="2026-09-03T15:30:00+05:30">3 September 2026</time>
+          </button>
+          <button class="show-option" type="button" role="radio" aria-checked="false" data-show="show2">
+            <span>Evening performance</span><strong>6:30 PM</strong><time datetime="2026-09-03T18:30:00+05:30">3 September 2026</time>
+          </button>
+        </div>
+
+        <section id="ticket-sales-summary" class="ticket-sales-summary" aria-labelledby="ticket-sales-title" aria-live="polite">
+          <div class="ticket-sales-heading">
+            <div><h3 id="ticket-sales-title">Confirmed tickets sold by block</h3><p>Updated directly from Firestore.</p></div>
+          </div>
+          <div class="tier-show-grid">
+            <article class="tier-show-card">
+              <header><span>Show</span><strong>3:30 PM</strong></header>
+              <ul>
+                <li><span>Block A</span><strong data-sales-show="show1" data-sales-tier="A">— / 200</strong></li>
+                <li><span>Block B</span><strong data-sales-show="show1" data-sales-tier="B">— / 200</strong></li>
+                <li><span>Block C</span><strong data-sales-show="show1" data-sales-tier="C">— / 200</strong></li>
+              </ul>
+            </article>
+            <article class="tier-show-card">
+              <header><span>Show</span><strong>6:30 PM</strong></header>
+              <ul>
+                <li><span>Block A</span><strong data-sales-show="show2" data-sales-tier="A">— / 200</strong></li>
+                <li><span>Block B</span><strong data-sales-show="show2" data-sales-tier="B">— / 200</strong></li>
+                <li><span>Block C</span><strong data-sales-show="show2" data-sales-tier="C">— / 200</strong></li>
+              </ul>
+            </article>
+          </div>
+          <p class="total-sold-strip"><span>Tickets sold across both shows</span><strong data-sales-total>— / 1200</strong></p>
+        </section>
+      </section>
+
+      <div class="booking-layout admin-booking-layout">
+        <section class="map-card" aria-labelledby="map-title">
+          <div class="map-toolbar">
+            <div><span class="step">02</span><h2 id="map-title">Select available seats</h2></div>
+            <div class="legend" aria-label="Seat status legend">
+              <span><i class="available" aria-hidden="true"></i><b>Available</b></span>
+              <span><i class="selected" aria-hidden="true"></i><b>Selected</b></span>
+              <span><i class="reserved" aria-hidden="true"></i><b>Tentative</b></span>
+              <span><i class="booked" aria-hidden="true"></i><b>Confirmed</b></span>
+            </div>
+          </div>
+          <div class="stage"><span>STAGE</span></div>
+          <p class="scroll-hint">↔ Swipe horizontally to explore the complete seating plan</p>
+          <div class="seat-map-scroll" tabindex="0" aria-label="Scrollable seating plan">
+            <div id="seat-map" class="seat-map"></div>
+          </div>
+        </section>
+
+        <aside class="booking-sidebar">
+          <section class="selection-card" aria-labelledby="selection-title">
+            <div class="selection-heading"><span class="step">03</span><h2 id="selection-title">Confirm walk-in booking</h2></div>
+            <div id="selection-content" aria-live="polite"></div>
+
+            <form id="walk-in-form" class="walkin-details-form">
+              <label><span>Customer name</span><input name="name" type="text" autocomplete="name" minlength="2" maxlength="80" required /></label>
+              <label><span>Sri Lankan contact number</span><input name="contact" type="tel" inputmode="tel" autocomplete="tel" placeholder="07X XXX XXXX" maxlength="15" required /></label>
+              <label><span>NIC / ID number <small>optional</small></span><input name="idNumber" type="text" autocomplete="off" maxlength="20" /></label>
+              <label><span>Payment method</span><select name="paymentMethod"><option value="cash">Cash</option><option value="card">Card</option><option value="bank-transfer">Bank transfer</option><option value="other">Other</option></select></label>
+              <label><span>Staff note <small>optional</small></span><textarea name="notes" rows="3" maxlength="300" placeholder="Payment reference or short note"></textarea></label>
+              <p id="booking-error" class="form-error" role="alert" hidden></p>
+              <button id="confirm-booking" class="primary-button" type="submit" disabled>Select seats to continue</button>
+            </form>
+          </section>
+        </aside>
+      </div>
+
+      <section class="admin-records-section" aria-labelledby="records-title">
+        <div class="records-heading">
+          <div><p class="eyebrow">Database management</p><h2 id="records-title">Reservation records</h2><p>Walk-in and legacy records can be permanently deleted. PayHere-backed records are protected from browser deletion.</p></div>
+          <div class="record-stats" aria-label="Reservation totals">
+            <span>Confirmed <strong id="count-booked">0</strong></span>
+            <span>Other <strong id="count-other">0</strong></span>
+            <span>Records <strong id="count-total">0</strong></span>
+          </div>
+        </div>
+
+        <div class="admin-table-card">
+          <div class="admin-toolbar">
+            <label><span>Search records</span><input id="admin-search" type="search" placeholder="Reference, customer, phone or seat" /></label>
+            <label><span>Status</span><select id="status-filter"><option value="all">All statuses</option><option value="booked">Confirmed</option><option value="reserved">Tentative</option><option value="expired">Expired</option><option value="cancelled">Cancelled</option></select></label>
+            <button id="export-csv" class="secondary-button" type="button">Export CSV</button>
+          </div>
+          <p id="admin-error" class="form-error" role="alert" hidden></p>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Reference</th><th>Customer</th><th>Show &amp; seats</th><th>Payment</th><th>Status</th><th>Total</th><th>Created</th><th>Action</th></tr></thead>
+              <tbody id="reservation-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <footer><p>Authorised staff system · Lyceum International School Gampaha</p><p>Garu Katanayaka · Zeus Hall</p></footer>
+    </main>
+
+    <dialog id="success-dialog" class="modal" aria-labelledby="success-title">
+      <div class="confirmation-card">
+        <span class="success-mark" aria-hidden="true">✓</span>
+        <p class="eyebrow">Directly confirmed</p>
+        <h2 id="success-title">Walk-in booking saved</h2>
+        <p>The selected seats are now shown as confirmed in live availability.</p>
+        <div class="reference-box"><span>Reservation reference</span><strong id="success-reference"></strong></div>
+        <dl id="success-details"></dl>
+        <button id="copy-reference" class="secondary-button" type="button">Copy reference</button>
+        <button class="primary-button" type="button" data-close="success-dialog">Return to seat map</button>
+      </div>
+    </dialog>
+
+    <div id="admin-toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
